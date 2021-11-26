@@ -24,15 +24,25 @@ export default {
     this.getDiscs();
   },
   methods: {
-    getDiscs() {
-      axios.
-      get('https://flynn.boolean.careers/exercises/api/array/music')
-      .then((response) => {
+    // getDiscs() {
+    //   axios.
+    //   get('https://flynn.boolean.careers/exercises/api/array/music')
+    //   .then((response) => {
+    //     this.discsList = response.data.response;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+    // }
+    getDiscs: async function() {
+      console.log(this);
+      try {
+        let response = await axios.get('https://flynn.boolean.careers/exercises/api/array/music');
+        console.log(response);
         this.discsList = response.data.response;
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      } catch(error) {
+        console.log(error);
+      }
     }
   },
 }
