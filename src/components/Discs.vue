@@ -1,17 +1,40 @@
 <template>
   <div class="container">
-    <DiscCard />
+    <DiscCard 
+    v-for="(disc, i) in discsList" :key="i"
+    :details="disc"/>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import DiscCard from "./DiscCard.vue"
 
 export default {
   name: 'Discs',
   components: {
     DiscCard
-  }
+  },
+  data() {
+    return {
+      discsList: []
+    };
+  },
+  created() {
+    this.getDiscs();
+  },
+  methods: {
+    getDiscs() {
+      axios.
+      get('https://flynn.boolean.careers/exercises/api/array/music')
+      .then((response) => {
+        this.discsList = response.data.response;
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+    }
+  },
 }
 </script>
 
@@ -23,8 +46,5 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    // debugging rules
-    height: 50rem;
-    background-color: aliceblue;
   }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <div class="card-container">
-    <img src="../assets/img/813JIliG-0L._AC_SL1425_-1024x1024.jpg" alt="pantera">
-    <h3>The Great Southern Trendkill</h3>
+    <img :src="details.poster" :alt="details.title">
+    <h3>{{ details.title }}</h3>
     <div class="details">
-      <div class="artist">Pantera</div>
-      <div class="year">1996</div>
+      <div class="artist">{{ details.author }}</div>
+      <div class="year">{{ details.year }}</div>
     </div>
   </div>
 </template>
@@ -12,6 +12,9 @@
 <script>
 export default {
   name: 'DiscCard',
+  props: {
+    details: Object
+  }
 }
 </script>
 
