@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <header>
+      <img src="./assets/img/spotify-logo.png" alt="spotify logo">
+    </header>
+    <Discs />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Discs from './components/Discs.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    Discs
   }
 }
 </script>
@@ -21,8 +23,15 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+}
+
+header {
+  height: 5rem;
+  background-color: #2e3a46;
+}
+
+header img {
+  height: 4.5rem;
+  margin: 0.25rem 1rem;
 }
 </style>
