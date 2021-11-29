@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SortBy :discList="discGenre" @selectedOption="getGenre"/>
+    <SortBy :discList="discsList" @selectedOption="getGenre" v-if="discsList.length > 0"/>
     <div class="container">
       <DiscCard
       v-for="(disc, i) in filteredDiscs" :key="i"
@@ -23,19 +23,25 @@ export default {
   data() {
     return {
       discsList: [],
-      discGenre: [],
       currentGenre: '',
+      currentArtist: ''
     };
   },
   computed: {
     filteredDiscs() {
-      if (this.currentGenre === '') {
-        return this.discsList
-      }
-      
-      let filteredList = this.discsList.filter((item) => {
+      let filteredList = [];
+      if (this.currentGenre === '' && this.currentArtist === '') {
+        return filteredList = this.discsList
+      } else if (this.currentGenre === '' && this.currentArtist) {
+        filteredList = this.discsList.filter((item) => {
+        return item.author.includes(this.currentArtist);
+      });
+      } else {
+        filteredList = this.discsList.filter((item) => {
         return item.genre.includes(this.currentGenre);
       });
+      }
+
       return filteredList;
     }
   },
@@ -57,17 +63,14 @@ export default {
       try {
         let response = await axios.get('https://flynn.boolean.careers/exercises/api/array/music');
         this.discsList = response.data.response;
-        response.data.response.forEach((item) => {
-          if (!this.discGenre.includes(item.genre)) {
-            this.discGenre.push(item.genre)
-          }
-        })
       } catch(error) {
         console.log(error);
       }
     },
-    getGenre(param) {
-      this.currentGenre = param;
+    getGenre(genre, artist) {
+      console.log(artist);
+      this.currentGenre = genre;
+      this.currentArtist = artist;
     }
   },
 }
