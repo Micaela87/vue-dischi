@@ -33,8 +33,13 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+    form {
+        margin: 1rem;
+    }
+    
     label {
-        font-size: 1.2rem;
+        font-size: 1.8rem;
         padding: 0 1rem;
+        color: white;
     }
 </style>
