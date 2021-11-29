@@ -29,6 +29,10 @@ export default {
   },
   computed: {
     filteredDiscs() {
+      if (this.currentGenre === '') {
+        return this.discsList
+      }
+      
       let filteredList = this.discsList.filter((item) => {
         return item.genre.includes(this.currentGenre);
       });

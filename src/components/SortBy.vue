@@ -25,7 +25,6 @@ export default {
   },
   methods: {
       sendValue() {
-          console.log(this.genre);
           this.$emit('selectedOption', this.genre)
       }
   },
@@ -34,5 +33,8 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-
+    label {
+        font-size: 1.2rem;
+        padding: 0 1rem;
+    }
 </style>
