@@ -1,19 +1,70 @@
 <template>
   <div id="app">
-    <header>
-      <img src="./assets/img/spotify-logo.png" alt="spotify logo">
-    </header>
-    <Discs />
+    <Header :genres="genresList" @sendOption="getOption"/>
+    <Main :discs="filteredList"/>
   </div>
 </template>
 
 <script>
-import Discs from './components/Discs.vue'
+import axios from 'axios';
+import Main from './components/Main/Main.vue';
+import Header from './components/Header/Header.vue';
 
 export default {
   name: 'App',
   components: {
-    Discs
+    Header,
+    Main
+  },
+  data() {
+    return {
+      discsList: [],
+      genresList: [],
+      selectedGenre: '',
+    }
+  },
+  computed: {
+    filteredList() {
+      if (!this.selectedGenre) {
+        return this.discsList
+      }
+
+      return this.discsList.filter((disc) => {
+        return disc.genre.includes(this.selectedGenre);
+      });
+    }
+  },
+  created() {
+    this.getDiscs();
+  },
+  methods: {
+    // getDiscs() {
+    //   axios.
+    //   get('https://flynn.boolean.careers/exercises/api/array/music')
+    //   .then((response) => {
+    //     this.discsList = response.data.response;
+    //   })
+    //   .catch((error) => {
+    //     console.log(error);
+    //   })
+    // }
+    getDiscs: async function() {
+      try {
+        let response = await axios.get('https://flynn.boolean.careers/exercises/api/array/music');
+        this.discsList = response.data.response;
+        this.genresList = this.discsList.reduce((acc, curr) => {
+          if (acc.length === 0 || !acc.includes(curr.genre)) {
+            acc.push(curr.genre);
+          }
+          return acc;
+        }, []);
+      } catch(error) {
+        console.log(error);
+      }
+    },
+    getOption(value) {
+      this.selectedGenre = value;
+    }
   }
 }
 </script>
@@ -23,15 +74,5 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-header {
-  height: 5rem;
-  background-color: #2e3a46;
-}
-
-header img {
-  height: 4.5rem;
-  margin: 0.25rem 1rem;
 }
 </style>
